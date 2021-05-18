@@ -36,7 +36,7 @@ This data will be used by the Sparkify analytics team to help understand what so
 
 There are 5 tables in the database. This design focuses on the songplays facts table which have the most important information for the analytics team.  The supporting dimension tables of time, users, songs, and artists help to provide context and additional details for the songplays table.
 
-[](Sparkify_ER_diagram.png)
+[ER_diagram](Sparkify_ER_diagram.png)
 
 ## ETL Pipeline
 
