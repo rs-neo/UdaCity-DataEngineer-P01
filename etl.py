@@ -136,9 +136,10 @@ def main():
         #Process logfiles and data files
         process_data(cur, conn, filepath='data/song_data', func=process_song_file)
         process_data(cur, conn, filepath='data/log_data', func=process_log_file)
-    except OperationalError as error:
+    except Error as error:
         # pass exception to function
-        show_exception(error)
+        print('Error occured')
+        print(error)
     finally:
         cur.close()
         conn.close()
