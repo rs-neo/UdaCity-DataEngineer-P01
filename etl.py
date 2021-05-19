@@ -60,23 +60,38 @@ def process_log_file(cur, filepath):
     df = df[df.page == 'NextSong']
 
     # convert timestamp column to datetime
-    df['ts'] = pd.to_datetime(df['ts'], unit='ms')
-    t = df['ts']
-    #t = pd.Timestamp(df['ts'])
-    #t = pd.Timestamp(t)
+    try:
+        t = pd.to_datetime(df['ts'], unit='ms')
+        print('Successfully create time DataFrame from logfile')
+    except Exception as error:
+        print(f'Error time Dataframe: {error}')
+        exit()
     
     #Create new time dataframe
-    time_data = {"timestamp": t, "hour": t.dt.hour, "day": t.dt.day, "week of year": t.dt.strftime('%U'), "month": t.dt.month, "year": t.dt.year, "weekday": t.dt.weekday}
-    time_df = pd.concat(time_data, axis=1)
+    try:
+        time_data = [df['ts'].values, t.dt.hour.values, t.dt.day.values, t.dt.strftime('%U').values, t.dt.month.values, t.dt.year.values, t.dt.weekday.values]
+        print('Succesfully created time data')
+    except Exception as error:
+        print(f'Error creating time data: {error}')
+        exit()
     
+    #Combing list of column names with timetable DF using zip
+    col_labels = ('start_time' ,'hour','day','week','month','year','weekday')
+    try:
+        time_df = pd.DataFrame(dict(zip(col_labels,time_data)))          
+        print(f"Successfully created Time table DF")
+    except Exception as error:
+        error(f"Error creating Time table DF: {error}")
+        exit()
+
     # insert time data records
-    col = ('start_time' ,'hour','day','week','month','year','weekday')
     try:
         for i, row in time_df.iterrows():
             cur.execute(time_table_insert, list(row))
         print("Time table INSERT statement successful.")
     except Error as error:
         print(f"Time table INSERT ERROR: {error}")
+        print(f'The values are: {list(row)}')
         exit()
 
     # load user table
@@ -126,7 +141,7 @@ def process_data(cur, conn, filepath, func):
     for i, datafile in enumerate(all_files, 1):
         func(cur, datafile)
         conn.commit()
-        print(f'{i}/{num_files} files processed.')
+        print(f'{i}/{num_files} files processed. - {datafile}')
 
 
 def main():

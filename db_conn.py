@@ -2,7 +2,8 @@ import psycopg2
 from psycopg2 import connect, Error
 
 # defaults
-DB_HOST = "127.0.0.1"
+#DB_HOST = "127.0.0.1"
+DB_HOST = "192.168.0.126"
 DB_NAME = "sparkifydb"
 DB_USER = "student"
 DB_PASSWORD = "student"
