@@ -12,6 +12,8 @@ def get_conn(host=None, db=None, user=None, password=None, port=None):
     """
     Connect to database and return a connection and cursor tuple
     """
+    conn = None
+    cursor = None
     
     if not db:
         db = DB_NAME
@@ -23,9 +25,13 @@ def get_conn(host=None, db=None, user=None, password=None, port=None):
         password = DB_PASSWORD
     if not port:
         port = DB_PORT
-    #print(f'Coonection success: host={host} dbname={db} user={user} password={password} port={port}')
-    conn = connect(f"host={host} dbname={db} user={user} password={password} port={port}")
-    conn.set_session(autocommit=True)
-    cursor = conn.cursor()
-
+    
+    try:
+        conn = connect(f"host={host} dbname={db} user={user} password={password} port={port}")
+        conn.set_session(autocommit=True)
+        cursor = conn.cursor()
+    except Error as error:
+        print(error)
+        exit(1)
+    print('Connection Successful')
     return (conn, cursor)
