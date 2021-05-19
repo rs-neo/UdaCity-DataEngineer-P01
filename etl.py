@@ -132,7 +132,7 @@ def process_data(cur, conn, filepath, func):
 def main():
     try:
         #Connection to database and get cursor
-        conn, cur = get_conn(host = "192.168.0.126")
+        conn, cur = get_conn()
         #Process logfiles and data files
         process_data(cur, conn, filepath='data/song_data', func=process_song_file)
         process_data(cur, conn, filepath='data/log_data', func=process_log_file)

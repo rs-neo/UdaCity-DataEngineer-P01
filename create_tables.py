@@ -12,7 +12,7 @@ def create_database():
     """
     try:       
         #Get connection to default DB
-        conn, cur = get_conn(db = "studentdb", host='192.168.0.126')     
+        conn, cur = get_conn(db = "studentdb")     
         # create sparkify database with UTF8 encoding
         cur.execute("DROP DATABASE IF EXISTS sparkifydb")
         cur.execute("CREATE DATABASE sparkifydb WITH ENCODING 'utf8' TEMPLATE template0")
@@ -43,7 +43,7 @@ def create_tables(cur, conn):
     """
     
     try:
-        conn, cur = get_conn(host='192.168.0.126')
+        conn, cur = get_conn()
         for query in create_table_queries:
             cur.execute(query)
             conn.commit()
@@ -63,7 +63,7 @@ def main():
     create_database()
 
     #Get connection to default DB
-    conn, cur = get_conn(host='192.168.0.126')
+    conn, cur = get_conn()
 
     drop_tables(cur, conn)
     create_tables(cur, conn)
