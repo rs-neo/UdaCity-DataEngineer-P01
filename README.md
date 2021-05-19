@@ -46,12 +46,12 @@ The extract, transform and load processes in **elt.py** populate the **songs** a
 
 Number of user for each membership level.
 
-'SELECT level, COUNT(level) FROM users GROUP BY level;'
+`SELECT level, COUNT(level) FROM users GROUP BY level;`
 
 Top 3 users by session.
 
-'SELECT users.last_name, users.first_name, COUNT(songplays.user_id) FROM songplays INNER JOIN users ON songplays.user_id=users.user_id GROUP BY users.last_name, users.first_name ORDER BY count DESC LIMIT 3;'
+`SELECT users.last_name, users.first_name, COUNT(songplays.user_id) FROM songplays INNER JOIN users ON songplays.user_id=users.user_id GROUP BY users.last_name, users.first_name ORDER BY count DESC LIMIT 3;`
 
 User activity breakdown in the App, by hour of the day.
 
-' SELECT hour, COUNT(hour) tmp FROM time GROUP BY hour ORDER BY tmp DESC;'
+`SELECT hour, COUNT(hour) tmp FROM time GROUP BY hour ORDER BY tmp DESC;`
