@@ -61,6 +61,9 @@ def process_log_file(cur, filepath):
 
     # convert timestamp column to datetime
     t = pd.to_datetime(df['ts'], unit='ms')
+    #t = pd.Timestamp(df['ts'])
+    #t = pd.Timestamp(t)
+    
     #Create new time dataframe
     time_data = {"timestamp": t, "hour": t.dt.hour, "day": t.dt.day, "week of year": t.dt.strftime('%U'), "month": t.dt.month, "year": t.dt.year, "weekday": t.dt.weekday}
     time_df = pd.concat(time_data, axis=1)
@@ -123,7 +126,7 @@ def process_data(cur, conn, filepath, func):
     for i, datafile in enumerate(all_files, 1):
         func(cur, datafile)
         conn.commit()
-        print(f'{i}/{num_files} files processed. - {datafile}')
+        print(f'{i}/{num_files} files processed.')
 
 
 def main():

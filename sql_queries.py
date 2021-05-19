@@ -7,31 +7,20 @@ time_table_drop = "DROP TABLE IF EXISTS time"
 
 # CREATE TABLES
 songplay_table_create = ("CREATE TABLE IF NOT EXISTS songplays (songplay_id SERIAL NOT NULL PRIMARY KEY,\
-                                                                 start_time timestamp NOT NULL,\
+                                                                 start_time bigint NOT NULL,\
                                                                  user_id int NOT NULL,\
                                                                  level varchar,\
-                                                                 song_id varchar NOT NULL,\
-                                                                 artist_id varchar NOT NULL,\
+                                                                 song_id varchar,\
+                                                                 artist_id varchar,\
                                                                  session_id int NOT NULL,\
                                                                  location varchar,\
                                                                  user_agent varchar);")
 
 user_table_create = ("CREATE TABLE IF NOT EXISTS users (user_id int NOT NULL PRIMARY KEY,\
-                                                                 start_time varchar,\
-                                                                 user_id int,\
-                                                                 level varchar,\
-                                                                 song_id varchar,\
-                                                                 artist_id varchar,\
-                                                                 session_id int,\
-                                                                 location varchar,\
-                                                                 user_agent varchar);")
-
-user_table_create = ("CREATE TABLE IF NOT EXISTS users (id SERIAL,\
-                                                        user_id int NOT NULL,\
-                                                        first_name varchar,\
-                                                        last_name varchar,\
-                                                        gender char,\
-                                                        level varchar);")
+                                                                 first_name varchar,\
+                                                                 last_name varchar, \
+                                                                 gender char, \
+                                                                 level varchar);")
 
 song_table_create = ("CREATE TABLE IF NOT EXISTS songs (song_id varchar NOT NULL PRIMARY KEY, \
                                                         title varchar,\
