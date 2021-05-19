@@ -20,12 +20,12 @@ This README file includes a summary of the project, how to run the Python script
 1. Baseline configured PostgreSQL database.
 
 2. The following Python libraries need to be installed in the environment.
-    * os
-    * sys
-    * glob
-    * psycopg2
-    * pandas
-    * io
+    - os
+    - sys
+    - glob
+    - psycopg2
+    - pandas
+    - io
 
 ## Purpose
 
