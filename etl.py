@@ -60,7 +60,8 @@ def process_log_file(cur, filepath):
     df = df[df.page == 'NextSong']
 
     # convert timestamp column to datetime
-    t = pd.to_datetime(df['ts'], unit='ms')
+    df['ts'] = pd.to_datetime(df['ts'], unit='ms')
+    t = df['ts']
     #t = pd.Timestamp(df['ts'])
     #t = pd.Timestamp(t)
     
@@ -105,7 +106,6 @@ def process_log_file(cur, filepath):
             # insert songplay record
             songplay_data = (row['ts'], row['userId'], row['level'], songid, artistid, row['sessionId'], row['location'],row['userAgent'])
             cur.execute(songplay_table_insert, songplay_data)
-            print("Successfully executed Songplays table INSERT statement")
     except Error as error:
         print(f"Songplays table INSERT ERROR: {error}")
         exit()
