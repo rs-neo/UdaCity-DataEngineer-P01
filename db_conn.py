@@ -23,6 +23,7 @@ def get_conn(host=None, db=None, user=None, password=None, port=None):
         password = DB_PASSWORD
     if not port:
         port = DB_PORT
+    #print(f'Coonection success: host={host} dbname={db} user={user} password={password} port={port}')
     conn = connect(f"host={host} dbname={db} user={user} password={password} port={port}")
     conn.set_session(autocommit=True)
     cur = conn.cursor()

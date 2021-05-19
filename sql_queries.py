@@ -9,41 +9,40 @@ time_table_drop = "DROP TABLE IF EXISTS time"
 # CREATE TABLES
 
 songplay_table_create = ("CREATE TABLE IF NOT EXISTS songplays (songplay_id SERIAL NOT NULL PRIMARY KEY,\
-                                                                 start_time varchar,\
-                                                                 user_id int,\
+                                                                 start_time timestamp NOT NULL,\
+                                                                 user_id int NOT NULL,\
                                                                  level varchar,\
-                                                                 song_id varchar,\
-                                                                 artist_id varchar,\
-                                                                 session_id int,\
+                                                                 song_id varchar NOT NULL,\
+                                                                 artist_id varchar NOT NULL,\
+                                                                 session_id int NOT NULL,\
                                                                  location varchar,\
                                                                  user_agent varchar);")
 
-user_table_create = ("CREATE TABLE IF NOT EXISTS users (id SERIAL,\
-                                                        user_id int NOT NULL,\
+user_table_create = ("CREATE TABLE IF NOT EXISTS users (user_id int NOT NULL PRIMARY KEY,\
                                                         first_name varchar,\
                                                         last_name varchar,\
                                                         gender char,\
                                                         level varchar);")
 
-song_table_create = ("CREATE TABLE IF NOT EXISTS songs (song_id varchar NOT NULL, \
+song_table_create = ("CREATE TABLE IF NOT EXISTS songs (song_id varchar NOT NULL PRIMARY KEY, \
                                                         title varchar,\
                                                         artist_id varchar,\
                                                         year int,\
                                                         duration float);")
 
-artist_table_create = ("CREATE TABLE IF NOT EXISTS artists (artist_id varchar NOT NULL,\
+artist_table_create = ("CREATE TABLE IF NOT EXISTS artists (artist_id varchar NOT NULL PRIMARY KEY,\
                                                             name varchar,\
                                                             location varchar,\
                                                             latitude float,\
                                                             longitude float);")
 
-time_table_create = ("CREATE TABLE IF NOT EXISTS time (start_time varchar NOT NULL,\
-                                                       hour int,\
-                                                       day int,\
-                                                       week int,\
-                                                       month int,\
-                                                       year int,\
-                                                       weekday int);")
+time_table_create = ("CREATE TABLE IF NOT EXISTS time (start_time timestamp NOT NULL PRIMARY KEY,\
+                                                       hour int NOT NULL,\
+                                                       day int NOT NULL,\
+                                                       week int NOT NULL,\
+                                                       month int NOT NULL,\
+                                                       year int NOT NULL,\
+                                                       weekday int NOT NULL);")
 
 # INSERT RECORDS
 
@@ -78,15 +77,7 @@ song_select = "SELECT songs.song_id, artists.artist_id \
                 artists.name = %s AND \
                 songs.duration = %s;"
 
-# DELETE DUPLICATE RECORDS
-
-del_duplicate_users = "WITH new_list AS \
-	                        (SELECT DISTINCT ON (user_id) * FROM users) \
-                        DELETE FROM users WHERE id NOT IN (SELECT id from new_list); \
-                        ALTER TABLE users DROP COLUMN IF EXISTS id;"
-
 # QUERY LISTS
 
 create_table_queries = [songplay_table_create, user_table_create, song_table_create, artist_table_create, time_table_create]
 drop_table_queries = [songplay_table_drop, user_table_drop, song_table_drop, artist_table_drop, time_table_drop]
-del_duplicate_records = [del_duplicate_users]

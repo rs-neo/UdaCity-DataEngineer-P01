@@ -12,13 +12,14 @@ def create_database():
     """
     try:       
         #Get connection to default DB
-        conn, cur = get_conn(db = "studentdb")     
+        conn, cur = get_conn(db = "studentdb", host='192.168.0.126')     
         # create sparkify database with UTF8 encoding
         cur.execute("DROP DATABASE IF EXISTS sparkifydb")
         cur.execute("CREATE DATABASE sparkifydb WITH ENCODING 'utf8' TEMPLATE template0")
         # close connection to default database
         cur.close()
-        conn.close()    
+        conn.close() 
+        print('DB sparkify - created successfully')   
     except Error as error:
         print ("Oops! An exception has occured:", error)
         print ("Exception TYPE:", type(error))
@@ -31,6 +32,7 @@ def drop_tables(cur, conn):
         for query in drop_table_queries:
             cur.execute(query)
             conn.commit()
+        print('Tables DROP success')
     except Error as error:
         print('Error in dropping Tables')
         print(error)
@@ -39,10 +41,16 @@ def create_tables(cur, conn):
     """
     Creates each table using the queries in `create_table_queries` list. 
     """
-    conn, cur = get_conn()
-    for query in create_table_queries:
-        cur.execute(query)
-        conn.commit()
+    
+    try:
+        conn, cur = get_conn(host='192.168.0.126')
+        for query in create_table_queries:
+            cur.execute(query)
+            conn.commit()
+        print('Tables CREATE success')
+    except Error as error:
+        print('Error in dropping Tables')
+        print(error)
 
 def main():
     """
@@ -55,7 +63,7 @@ def main():
     create_database()
 
     #Get connection to default DB
-    conn, cur = get_conn()
+    conn, cur = get_conn(host='192.168.0.126')
 
     drop_tables(cur, conn)
     create_tables(cur, conn)
